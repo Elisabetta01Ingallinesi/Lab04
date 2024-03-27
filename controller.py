@@ -56,6 +56,33 @@ class SpellChecker:
               "4. Exit\n" +
               "______________________________\n")
 
+    def handleSpellCheck(self, e):
+        language = self._view.ddLanguage.value
+        modalita = self._view.ddOpzioni.value
+        testo = self._view.txtTesto.value
+
+        if language == None or modalita == None or testo == "":
+            self._view.lvOut.controls.append(ft.Text("Errore, almeno un parametro non è stato inserito"))
+
+        else:
+            parole_errate, tempo = self.handleSentence(testo, language, modalita)
+
+            self._view.lvOut.controls.append(ft.Text(f"Frase inserita {testo}"))
+
+            if parole_errate == " - ":
+                self._view.lvOut.controls.append(ft.Text(f"Parole errate: nessuna"))
+            else:
+                self._view.lvOut.controls.append(ft.Text(f"Parole errate: {parole_errate}"))
+
+            self._view.lvOut.controls.append(ft.Text(f"Tempo richiesto dalla ricerca: {tempo}"))
+
+        self._view.update()
+
+
+
+
+
+
 
 def replaceChars(text):
     chars = "\\`*_{}[]()>#+-.!$?%^;,=_~"

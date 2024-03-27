@@ -27,8 +27,23 @@ class View(object):
         )
 
         # Add your stuff here
+        # Row 1
+        self.__tDd1 = ft.Text()
+        self.ddLanguage = ft.Dropdown(label="Lingua", width= 500, on_change=self.dropdown_changed1)
+        self._fillDdLanguage()
+        row1 = ft.Row([self.ddLanguage, self.__tDd1])
 
-        self.page.add([])
+        # Row 2
+        self.__tDd2 = ft.Text()
+        self.ddOpzioni = ft.Dropdown(label = "Opzione di ricerca", width = 200, on_change=self.dropdown_changed2)
+        self._fillDdOpzioni()
+        self.txtTesto = ft.TextField(label = "Testo", width= 600)
+        self._btn = ft.ElevatedButton(text = "SpellCheck", on_click=self.__controller.handleSpellCheck)
+        row2= ft.Row([self.ddOpzioni, self.__tDd2, self.txtTesto, self._btn])
+
+        self.lvOut = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+
+        self.page.add(row1, row2, self.lvOut)
 
         self.page.update()
 
@@ -51,3 +66,23 @@ class View(object):
         #     ft.colors.GREY_900 if self.page.theme_mode == ft.ThemeMode.DARK else ft.colors.GREY_300
         # )
         self.page.update()
+
+    def _fillDdLanguage(self):
+        self.ddLanguage.options.append(ft.dropdown.Option("italian"))
+        self.ddLanguage.options.append(ft.dropdown.Option("english"))
+        self.ddLanguage.options.append(ft.dropdown.Option("spanish"))
+
+    def dropdown_changed1(self, e):
+        self.__tDd1.value = f"Dropdown cambiato correttamente {self.ddLanguage.value} "
+        self.page.update()
+
+    def _fillDdOpzioni(self):
+        self.ddOpzioni.options.append(ft.dropdown.Option("Default"))
+        self.ddOpzioni.options.append(ft.dropdown.Option("Linear"))
+        self.ddOpzioni.options.append(ft.dropdown.Option("Dichotomic"))
+
+    def dropdown_changed2(self, e):
+        self.__tDd2.value = f"Dropdown cambiato correttamente {self.ddOpzioni.value} "
+        self.page.update()
+
+
